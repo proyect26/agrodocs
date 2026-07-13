@@ -1,0 +1,69 @@
+import React from 'react';
+import { Menu, FileText, Truck, HandCoins, Settings, Pencil } from 'lucide-react';
+
+export default function Header({ activeTab, onTabChange }) {
+  return (
+    <>
+      <div style={{
+        backgroundColor: 'rgba(10, 16, 30, 0.55)',
+        backdropFilter: 'blur(12px)',
+        color: 'rgba(186, 230, 253, 0.75)',
+        padding: '0.2rem 1rem',
+        fontSize: '0.62rem',
+        textAlign: 'center',
+        fontWeight: '600',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        Digital Assets · Angel's Blooms
+      </div>
+      <header className="top-nav">
+        <div className="flex items-center gap-4">
+          <button className="icon-button">
+            <Menu size={20} />
+          </button>
+          <div className="flex items-center gap-2 font-black" style={{ fontSize: '1.35rem', color: 'hsl(199, 90%, 68%)', letterSpacing: '0.07em', fontWeight: 900 }}>
+            <div style={{ background: 'linear-gradient(135deg, hsl(199,90%,50%), hsl(220,85%,40%))', borderRadius: '8px', padding: '0.3rem 0.5rem', display: 'flex', alignItems: 'center', boxShadow: '0 2px 10px rgba(14,165,233,0.35)' }}>
+              <FileText size={20} color="white" strokeWidth={2.5} />
+            </div>
+            AgroDocs
+          </div>
+        </div>
+
+        <nav className="nav-links">
+          {[
+            { id: 'editor', label: 'Editor', icon: <Pencil size={13} /> },
+            { id: 'documents', label: 'Documents', icon: <FileText size={13} /> },
+            { id: 'suppliers', label: 'Proveedores', icon: <Truck size={13} /> },
+            { id: 'payments', label: 'Pagos', icon: <HandCoins size={13} /> },
+            { id: 'settings', label: 'Settings', icon: <Settings size={13} /> },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              className={`nav-link ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => onTabChange(tab.id)}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                {tab.icon}
+                {tab.label}
+              </span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <div style={{
+            width: 34, height: 34, borderRadius: '50%',
+            background: 'linear-gradient(135deg, hsl(199,85%,50%), hsl(340,90%,55%))',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: 'white', fontWeight: 800, fontSize: '0.9rem',
+            boxShadow: '0 2px 12px rgba(14,165,233,0.45)',
+          }}>
+            E
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
