@@ -696,6 +696,22 @@ select option {
     background-image: none !important;
   }
 
+  /* Disable all glass filters, blurs and pseudo-elements during printing to prevent Chrome print preview freeze */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
+  .card::before,
+  .card::after,
+  .form-sidebar > div::before,
+  .form-sidebar > div::after {
+    display: none !important;
+    content: none !important;
+  }
+
   .top-nav,
   .form-sidebar,
   .settings-section,
