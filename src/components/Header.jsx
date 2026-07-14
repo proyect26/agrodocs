@@ -24,7 +24,7 @@ export default function Header({ activeTab, onTabChange }) {
             <img 
               src="./logo_agro.png" 
               alt="AgroDocs" 
-              style={{ height: '36px', width: 'auto', objectFit: 'contain' }} 
+              style={{ height: '46px', width: 'auto', objectFit: 'contain' }} 
             />
             AgroDocs
           </div>
