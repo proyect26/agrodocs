@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pin, PinOff, Trash2 } from 'lucide-react';
+import { Pin, PinOff, Trash2, Printer } from 'lucide-react';
 
 const logoInvoice = './logo_invoice.png';
 
@@ -118,7 +118,16 @@ export default function CommercialInvoicePreview({ data, zoom = 0.85, onRemoveIt
   return (
     <div className="preview-section card a4-invoice-wrapper" style={{ marginTop: '2rem' }}>
       <div className="document-container" style={{ backgroundColor: '#e5e7eb' }}>
-        <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
+        <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={() => window.print()}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+          >
+            <Printer size={14} />
+            Imprimir Invoice
+          </button>
           <button
             type="button"
             className="btn btn-outline"
