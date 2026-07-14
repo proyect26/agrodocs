@@ -443,28 +443,37 @@ export default function DocumentsList() {
 
       {/* Modal de Previsualización */}
       {previewDoc && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', 
-          backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(3px)',
-          zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem'
-        }}>
-          <div style={{
-            background: 'white', borderRadius: 'var(--radius-lg)', 
-            boxShadow: 'var(--shadow-xl)', overflow: 'hidden',
-            display: 'flex', flexDirection: 'column', maxHeight: '100%', maxWidth: '100%'
-          }}>
+        <div 
+          onClick={() => setPreviewDoc(null)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', 
+            backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(3px)',
+            zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem'
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: 'white', borderRadius: 'var(--radius-lg)', 
+              boxShadow: 'var(--shadow-xl)', overflow: 'hidden',
+              display: 'flex', flexDirection: 'column', maxHeight: '90vh', maxWidth: '95vw',
+              color: 'black'
+            }}
+          >
             {/* Modal Header */}
             <div style={{ 
               display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-              padding: '1rem 1.5rem', borderBottom: '1px solid var(--border)', background: '#f8fafc' 
+              padding: '1rem 1.5rem', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' 
             }}>
-              <h3 style={{ margin: 0, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ margin: 0, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0f172a' }}>
                 <Eye size={18} color="var(--primary)" />
                 Previsualización de Documento
               </h3>
               <button 
                 onClick={() => setPreviewDoc(null)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', padding: '4px', display: 'flex', alignItems: 'center' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#0f172a'}
+                onMouseLeave={e => e.currentTarget.style.color = '#64748b'}
               >
                 <X size={20} />
               </button>
