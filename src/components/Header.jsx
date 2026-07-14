@@ -34,10 +34,10 @@ export default function Header({ activeTab, onTabChange }) {
         <nav className="nav-links">
           {[
             { id: 'editor', label: 'Editor', icon: <Pencil size={13} /> },
-            { id: 'documents', label: 'Documents', icon: <FileText size={13} /> },
+            { id: 'documents', label: 'Documentos', icon: <FileText size={13} /> },
             { id: 'suppliers', label: 'Proveedores', icon: <Truck size={13} /> },
             { id: 'payments', label: 'Pagos', icon: <HandCoins size={13} /> },
-            { id: 'settings', label: 'Settings', icon: <Settings size={13} /> },
+            { id: 'settings', label: 'Configuraciones', icon: <Settings size={13} /> },
           ].map(tab => (
             <button
               key={tab.id}
