@@ -119,6 +119,26 @@ const getDefaultUntFactor = () => {
 function App() {
   const [activeTab, setActiveTab] = useState('editor');
   const [zoom, setZoom] = useState(1);
+  const [licenseStatus, setLicenseStatus] = useState({ active: true, message: '' });
+
+  useEffect(() => {
+    // Validacion de Licencia Remota desde tu repositorio GitHub
+    const LICENSE_URL = 'https://raw.githubusercontent.com/proyect26/agrodocs/main/license.json';
+    fetch(LICENSE_URL)
+      .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.status === 'suspended') {
+          setLicenseStatus({ active: false, message: data.message || 'Licencia suspendida por falta de pago. Por favor contacte con soporte técnico.' });
+        }
+      })
+      .catch(() => {
+        // En caso de que no haya conexion, permitimos el uso por defecto
+        setLicenseStatus({ active: true, message: '' });
+      });
+  }, []);
   const [formData, setFormData] = useState({
     facturaAnterior: '557',
     serie: '001-002',
@@ -400,6 +420,29 @@ function App() {
       }
     }, 1000);
   };
+
+  if (!licenseStatus.active) {
+    return (
+      <div className="app-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'var(--background)' }}>
+        <div className="liquid-bg-blobs no-print">
+          <VideoBackground />
+          <div className="bg-blob bg-blob-1"></div>
+          <div className="bg-blob bg-blob-2"></div>
+          <div className="bg-blob bg-blob-3"></div>
+        </div>
+        <div className="card" style={{ padding: '3rem', maxWidth: '500px', textAlign: 'center', backdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-border-strong)', boxShadow: 'var(--glass-shadow-lg)', position: 'relative', zIndex: 10 }}>
+          <h2 style={{ color: 'hsl(340, 95%, 60%)', fontSize: '1.8rem', marginBottom: '1rem', fontWeight: 800 }}>SISTEMA DE LICENCIA AGRODOCS</h2>
+          <div style={{ height: '2px', background: 'hsl(340, 95%, 60%)', width: '60px', margin: '0 auto 1.5rem auto' }}></div>
+          <p style={{ fontSize: '1rem', lineHeight: '1.6', color: 'var(--text-primary)', marginBottom: '2rem' }}>
+            {licenseStatus.message || 'La licencia de uso para esta aplicación ha sido suspendida. Por favor, póngase en contacto con el administrador del sistema para activar su cuenta.'}
+          </p>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            Código de error: 402 Payment Required
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">
