@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import InvoiceForm from './components/InvoiceForm';
 import LabelPreview from './components/LabelPreview';
@@ -10,6 +10,82 @@ import LabelsBatchPanel from './components/LabelsBatchPanel';
 import SuppliersControl from './components/SuppliersControl';
 import PaymentsRegistry from './components/PaymentsRegistry';
 import SettingsPanel from './components/SettingsPanel';
+
+function VideoBackground() {
+  const [activeVideo, setActiveVideo] = useState(1);
+  const video1Ref = React.useRef(null);
+  const video2Ref = React.useRef(null);
+  const [opacity1, setOpacity1] = useState(1);
+  const [opacity2, setOpacity2] = useState(0);
+
+  useEffect(() => {
+    const video1 = video1Ref.current;
+    const video2 = video2Ref.current;
+    if (!video1 || !video2) return;
+
+    video1.play().catch(err => console.log(err));
+
+    const checkTime = () => {
+      if (activeVideo === 1) {
+        if (video1.duration && video1.currentTime >= video1.duration - 1.5) {
+          video2.currentTime = 0;
+          video2.play().catch(err => console.log(err));
+          setOpacity1(0);
+          setOpacity2(1);
+          setActiveVideo(2);
+        }
+      } else if (activeVideo === 2) {
+        if (video2.duration && video2.currentTime >= video2.duration - 1.5) {
+          video1.currentTime = 0;
+          video1.play().catch(err => console.log(err));
+          setOpacity1(1);
+          setOpacity2(0);
+          setActiveVideo(1);
+        }
+      }
+    };
+
+    const interval = setInterval(checkTime, 250);
+    return () => clearInterval(interval);
+  }, [activeVideo]);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
+      <video
+        ref={video1Ref}
+        src="./imagesfondo/crea_un_fondo_de_pantalla_con.mp4"
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: opacity1,
+          transition: 'opacity 1.5s ease-in-out',
+          pointerEvents: 'none'
+        }}
+      />
+      <video
+        ref={video2Ref}
+        src="./imagesfondo/crea_un_fondo_de_pantalla_con.mp4"
+        muted
+        playsInline
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: opacity2,
+          transition: 'opacity 1.5s ease-in-out',
+          pointerEvents: 'none'
+        }}
+      />
+    </div>
+  );
+}
 
 const PIECE_TYPE_RATES = {
   QB: 0.25,
@@ -328,6 +404,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="liquid-bg-blobs no-print">
+        <VideoBackground />
         <div className="bg-blob bg-blob-1"></div>
         <div className="bg-blob bg-blob-2"></div>
         <div className="bg-blob bg-blob-3"></div>
