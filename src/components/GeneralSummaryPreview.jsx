@@ -1,6 +1,7 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
-import logoInvoice from '../assets/logo_invoice.png';
+
+const logoInvoice = './logo_invoice.png';
 
 const toInt = (value) => Math.max(0, Math.round(Number(value) || 0));
 const round2 = (value) => Math.round((Number(value) || 0) * 100) / 100;

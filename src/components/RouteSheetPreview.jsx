@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { Pin, PinOff } from 'lucide-react';
-import logoInvoice from '../assets/logo_invoice.png';
+
+const logoInvoice = './logo_invoice.png';
 
 const TEMPLATE_STORAGE_KEY = 'hoja_ruta_template_v1';
 const EDIT_MODE_STORAGE_KEY = 'hoja_ruta_edit_mode_v1';

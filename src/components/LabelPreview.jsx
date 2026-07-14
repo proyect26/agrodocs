@@ -63,7 +63,7 @@ export default function LabelPreview({ data, zoom = 0.85 }) {
           {/* LOGO */}
           <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
             <img
-              src="/senae-logo.png"
+              src="./senae-logo.png"
               alt="Aduana del Ecuador SENAE"
               style={{ height: '100px', maxWidth: '100%', objectFit: 'contain', display: 'block', margin: '0 auto' }}
             />

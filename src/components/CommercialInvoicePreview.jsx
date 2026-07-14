@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pin, PinOff, Trash2 } from 'lucide-react';
-import logoInvoice from '../assets/logo_invoice.png';
+
+const logoInvoice = './logo_invoice.png';
 
 const normalizePiecesType = (value) => {
   if (value === 'HB0' || value === 'HB') return 'HB0';
