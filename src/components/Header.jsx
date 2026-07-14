@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, FileText, Truck, HandCoins, Settings, Pencil } from 'lucide-react';
+import { FileText, Truck, HandCoins, Settings, Pencil } from 'lucide-react';
 
 export default function Header({ activeTab, onTabChange }) {
   return (
@@ -20,9 +20,6 @@ export default function Header({ activeTab, onTabChange }) {
       </div>
       <header className="top-nav">
         <div className="flex items-center gap-4">
-          <button className="icon-button">
-            <Menu size={20} />
-          </button>
           <div className="flex items-center gap-2 font-black" style={{ fontSize: '1.35rem', color: 'hsl(199, 90%, 68%)', letterSpacing: '0.07em', fontWeight: 900 }}>
             <div style={{ background: 'linear-gradient(135deg, hsl(199,90%,50%), hsl(220,85%,40%))', borderRadius: '8px', padding: '0.3rem 0.5rem', display: 'flex', alignItems: 'center', boxShadow: '0 2px 10px rgba(14,165,233,0.35)' }}>
               <FileText size={20} color="white" strokeWidth={2.5} />
