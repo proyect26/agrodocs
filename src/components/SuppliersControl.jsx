@@ -173,7 +173,7 @@ export default function SuppliersControl() {
     if (!supplierName.trim()) return;
 
     const newSupplier = {
-      id: crypto.randomUUID(),
+      id: typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : 'sup-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9),
       name: supplierName.trim(),
       type: supplierType,
       service: ''
