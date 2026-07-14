@@ -21,9 +21,11 @@ export default function Header({ activeTab, onTabChange }) {
       <header className="top-nav">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 font-black" style={{ fontSize: '1.35rem', color: 'hsl(199, 90%, 68%)', letterSpacing: '0.07em', fontWeight: 900 }}>
-            <div style={{ background: 'linear-gradient(135deg, hsl(199,90%,50%), hsl(220,85%,40%))', borderRadius: '8px', padding: '0.3rem 0.5rem', display: 'flex', alignItems: 'center', boxShadow: '0 2px 10px rgba(14,165,233,0.35)' }}>
-              <FileText size={20} color="white" strokeWidth={2.5} />
-            </div>
+            <img 
+              src="./logo_agro.png" 
+              alt="AgroDocs" 
+              style={{ height: '36px', width: 'auto', objectFit: 'contain' }} 
+            />
             AgroDocs
           </div>
         </div>
