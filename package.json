@@ -37,8 +37,8 @@
     "wait-on": "^8.0.3"
   },
   "build": {
-    "appId": "com.angelsblooms.generaetiketas",
-    "productName": "Genera Etiketas",
+    "appId": "com.angelsblooms.agrodocs",
+    "productName": "AgroDocs",
     "directories": {
       "output": "release"
     },
@@ -48,6 +48,7 @@
       "package.json"
     ],
     "win": {
+      "icon": "build/icon.png",
       "target": [
         "nsis",
         "portable"
