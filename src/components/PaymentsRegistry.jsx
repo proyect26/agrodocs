@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Mail } from 'lucide-react';
+import EmailModal from './EmailModal';
 
 const PAYMENTS_KEY = 'payments_registry_v1';
 const SUPPLIERS_KEY = 'suppliers_registry_v4';
@@ -40,6 +42,7 @@ export default function PaymentsRegistry() {
   const [payments, setPayments] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [form, setForm] = useState(emptyPayment);
+  const [emailPayment, setEmailPayment] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -256,19 +259,80 @@ export default function PaymentsRegistry() {
             <strong>Estado</strong>
             <strong></strong>
           </div>
-          {payments.map((payment) => (
-            <div key={payment.id} className="suppliers-row suppliers-row-6">
-              <strong>{suppliersById[payment.supplierId]?.name || 'Proveedor eliminado'}</strong>
-              <span>{payment.date}</span>
-              <strong>{money(payment.amount)}</strong>
-              <span>{payment.method}</span>
-              <span>{payment.status}</span>
-              <button className="btn btn-outline" onClick={() => deletePayment(payment.id)}>Eliminar</button>
-            </div>
-          ))}
+          {payments.map((payment) => {
+            const supplierName = suppliersById[payment.supplierId]?.name || 'Proveedor eliminado';
+            return (
+              <div key={payment.id} className="suppliers-row suppliers-row-6">
+                <strong>{supplierName}</strong>
+                <span>{payment.date}</span>
+                <strong>{money(payment.amount)}</strong>
+                <span>{payment.method}</span>
+                <span>{payment.status}</span>
+                <div style={{ display: 'flex', gap: '0.35rem', justifyContent: 'flex-end' }}>
+                  <button 
+                    className="btn btn-outline" 
+                    onClick={() => setEmailPayment(payment)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                    title="Enviar comprobante por correo"
+                  >
+                    <Mail size={12} /> Email
+                  </button>
+                  <button 
+                    className="btn btn-outline" 
+                    style={{ color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.3)' }} 
+                    onClick={() => deletePayment(payment.id)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            );
+          })}
           {!payments.length && <p className="suppliers-empty">Aun no hay pagos registrados.</p>}
         </div>
       </section>
+
+      {/* Modal de Envíos de Email para Pagos */}
+      {emailPayment && (
+        <EmailModal
+          isOpen={!!emailPayment}
+          onClose={() => setEmailPayment(null)}
+          docLabel={`Comprobante de Pago - ${suppliersById[emailPayment.supplierId]?.name || 'Proveedor'}`}
+          subject={`AgroDocs - Comprobante de Pago - ${suppliersById[emailPayment.supplierId]?.name || 'Proveedor'} (${emailPayment.date})`}
+          bodyHtml={`<p>Estimado(a) <strong>${suppliersById[emailPayment.supplierId]?.name || 'Proveedor'}</strong>,</p>
+<p>Adjunto a este correo encontrará el detalle de su registro de pago generado por el sistema <strong>AgroDocs</strong>:</p>
+<table style="width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-family: sans-serif; font-size: 14px;">
+  <tbody>
+    <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold; width: 150px;">Proveedor:</td>
+      <td style="padding: 8px;">${suppliersById[emailPayment.supplierId]?.name || 'N/A'}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold;">Fecha de Registro:</td>
+      <td style="padding: 8px;">${emailPayment.date}</td>
+    </tr>
+    <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold;">Monto Total:</td>
+      <td style="padding: 8px; font-weight: bold; color: #166534;">${money(emailPayment.amount)}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold;">Método de Pago:</td>
+      <td style="padding: 8px;">${emailPayment.method}</td>
+    </tr>
+    <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold;">Estado del Pago:</td>
+      <td style="padding: 8px; font-weight: bold;">${emailPayment.status}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e2e8f0;">
+      <td style="padding: 8px; font-weight: bold;">Observación:</td>
+      <td style="padding: 8px; font-style: italic;">${emailPayment.note || 'Ninguna'}</td>
+    </tr>
+  </tbody>
+</table>
+<p>Si tiene alguna pregunta, por favor póngase en contacto con nosotros.</p>
+<p>Saludos cordiales,<br/><strong>Angel's Blooms / AgroDocs</strong></p>`}
+        />
+      )}
     </main>
   );
 }
